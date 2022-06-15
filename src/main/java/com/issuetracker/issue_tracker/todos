@@ -1,0 +1,8 @@
+TODO: in all services map outputs to dtos
+
+TODO: add some loggers
+
+TODO: when logging with an email for example this email becomes primary. Every action that it's done uses it (for example if you create sth the creator for the entity
+TODO: will be the email you have logged with)
+
+TODO: create requests classes that will map from frontend request body
