@@ -21,7 +21,7 @@ public class Project {
     @JoinColumn(name = "project_id", referencedColumnName = "name")
     private List<Issue> issues = new ArrayList<>();
 
-    private Project(String name) {
+    public Project(String name) {
         this.name = name;
         this.issues = Collections.emptyList();
     }

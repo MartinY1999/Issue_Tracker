@@ -38,6 +38,14 @@ public class Issue {
         this.issueType = issueType;
     }
 
+    public Issue(long id, LocalDateTime createdOn, String creator,
+                 IssueType issueType) {
+        this.id = id;
+        this.createdOn = createdOn;
+        this.creator = creator;
+        this.issueType = issueType;
+    }
+
     public Issue() {
 
     }
