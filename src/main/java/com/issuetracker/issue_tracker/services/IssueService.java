@@ -8,10 +8,12 @@ import com.issuetracker.issue_tracker.repositories.IssueHistoryRepository;
 import com.issuetracker.issue_tracker.repositories.IssueRepository;
 import com.issuetracker.issue_tracker.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +34,16 @@ public class IssueService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
-    public void insertIssue(String projectName,
-                            String creator,
-                            IssueType issueType,
-                            String assignee,
-                            Optional<String> description,
-                            Optional<LocalDateTime> dueDate) {
-        Project project = projectRepository.findById(projectName).orElseThrow(RuntimeException::new);
+    public HttpStatus insertIssue(String projectName,
+                                  String creator,
+                                  IssueType issueType,
+                                  String assignee,
+                                  Optional<String> description,
+                                  Optional<LocalDateTime> dueDate) {
+        Project project = projectRepository.findById(projectName).orElse(null);
+        if (project == null) {
+            return HttpStatus.BAD_REQUEST;
+        }
         Issue issue = Issue.of(creator, issueType);
         IssueHistory issueHistory = IssueHistory.of(assignee, description, dueDate);
 
@@ -47,6 +52,7 @@ public class IssueService {
 
         issueRepository.save(issue);
         issueHistoryRepository.save(issueHistory);
+        return HttpStatus.CREATED;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)

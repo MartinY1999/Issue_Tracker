@@ -90,9 +90,9 @@ public class IssueTrackerController {
             @RequestParam String assignee,
             @RequestParam Optional<String> description,
             @RequestParam Optional<LocalDateTime> dueDate) {
-        issueService.insertIssue(projectName, creator, issueType, assignee, description, dueDate);
+        HttpStatus responseStatus = issueService.insertIssue(projectName, creator, issueType, assignee, description, dueDate);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(responseStatus).build();
     }
 
     @GetMapping(GET_ISSUES_PER_PROJECT)
