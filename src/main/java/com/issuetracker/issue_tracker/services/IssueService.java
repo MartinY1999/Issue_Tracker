@@ -101,6 +101,11 @@ public class IssueService {
     }
 
     public Issue getIssueOverview(long issueId) {
-        return issueRepository.findById(issueId).orElseThrow(RuntimeException::new);
+        return issueRepository.findById(issueId).orElse(null);
+    }
+
+    public IssueHistory getLastIssueHistoryByIssueId(long issueId) {
+        List<IssueHistory> allHistory = issueHistoryRepository.getIssueHistoryByIssueId(issueId);
+        return allHistory.get(allHistory.size() - 1);
     }
 }

@@ -31,7 +31,7 @@ public class ProjectService {
     public Project getProjectById(String projectName) {
         return projectRepository
                 .findById(projectName)
-                .orElseThrow(RuntimeException::new);
+                .orElse(null);
     }
 
     public void deleteProject(String projectName) {
